@@ -21,7 +21,8 @@ CREATE TABLE map_region (
   id serial PRIMARY KEY,
   x integer NOT NULL,
   y integer NOT NULL,
-  dryad_map integer references dryad_map(id)
+  dryad_map integer references dryad_map(id),
+  CONSTRAINT unique_region_x_y UNIQUE(x, y)
 );
 
 CREATE TABLE map_point (
@@ -29,7 +30,8 @@ CREATE TABLE map_point (
   x integer NOT NULL,
   y integer NOT NULL,
   biome_type biome NOT NULL, 
-  region integer references map_region(id) NOT NULL
+  region integer references map_region(id) NOT NULL,
+  CONSTRAINT unique_point_x_y UNIQUE(x, y)
 );
 -- +goose StatementEnd
 

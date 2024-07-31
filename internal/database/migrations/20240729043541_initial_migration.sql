@@ -9,8 +9,7 @@ CREATE TYPE biome AS ENUM (
 );
 
 CREATE TABLE dryad_user (
-  id serial PRIMARY KEY,
-  abandonauth_uuid uuid NOT NULL
+  id serial PRIMARY KEY
 );
 
 CREATE TABLE dryad_map (

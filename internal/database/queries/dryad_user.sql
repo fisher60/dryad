@@ -6,5 +6,5 @@ WHERE id = $1 LIMIT 1;
 SELECT * FROM dryad_user;
 
 -- name: CreateDryadUser :one
-INSERT INTO dryad_user (abandonauth_uuid) VALUES ($1)
+INSERT INTO dryad_user DEFAULT VALUES
 RETURNING *;

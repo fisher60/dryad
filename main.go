@@ -17,18 +17,27 @@ func uuidToStr(uuid pgtype.UUID) string {
 }
 
 func listUsers() []string {
-	users, err := database.Engine.ListDryadUsers(context.Background())
+	user_ids, err := database.Engine.ListDryadUsers(context.Background())
 	if err != nil {
 		log.Error(err)
 	}
 
 	var out []string
 
-	for _, v := range users {
-		out = append(out, uuidToStr(v.AbandonauthUuid))
+	for _, v := range user_ids {
+		out = append(out, fmt.Sprint(v))
 	}
 
 	return out
+}
+
+func createUser() string {
+	user_id, err := database.Engine.CreateDryadUser(context.Background())
+	if err != nil {
+		log.Error(err)
+	}
+
+	return fmt.Sprint(user_id)
 }
 
 func main() {
@@ -45,6 +54,10 @@ func main() {
 
 	router.GET("/users", func(c *gin.Context) {
 		c.JSON(http.StatusOK, map[string]any{"users": listUsers()})
+	})
+
+	router.POST("/users", func(c *gin.Context) {
+		c.JSON(http.StatusCreated, map[string]any{"user_id": createUser()})
 	})
 
 	http.ListenAndServe(":8000", router)
